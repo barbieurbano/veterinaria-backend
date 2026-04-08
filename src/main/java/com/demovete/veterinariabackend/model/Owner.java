@@ -14,6 +14,7 @@ public class Owner {
     private Long id;
     private String firstNombre;
     private String lastName;
+    private Integer age;
     private String dni;
 
     //Estos son los getters y setters, y metodos que tambien veremos luego.
