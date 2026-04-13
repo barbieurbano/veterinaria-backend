@@ -1,6 +1,8 @@
 package com.demovete.veterinariabackend.model;
 //Estos se importan cuando hemos puesto @Entity y @Id (no llevan ; al final porque son anotaciones)
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 //Se importan todos los paquetes import jakarta.persistence.*; y me borraria el de .Id, .GeneratedValue..
 
 
@@ -22,6 +24,7 @@ public class Animal {
     @Id
     //Para generar automaticamante el ID, se puede configurar la estrategia esta es la opcion mas comun
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //En proyectos grandes puede ser un UUID que son numeros grandes
     private Long id;
     //Si necesitamos que sea unico el nombre es @Column(unique) CTRL+espacio te da las opciones
 
@@ -34,6 +37,12 @@ public class Animal {
     private String color;
     private String genero;
     private Double peso;
+    //vamos agregar enum y fecha de adopcion, tipo de
+    //LocalDate(java.time) te tiene en cuenta el calendario, puede aniadirle dias, anios viciestos
+    //Podemos ponerle una fecha por defecto con  = LocalDate.now()
+    private LocalDate fechaAdopcion = LocalDate.now();
+
+
 
     //Asociacion entre dos tablas. Asociacion muchos a uno, mas comun y utilizada
     //@ManyToOne
@@ -114,8 +123,18 @@ public class Animal {
         this.peso = peso;
     }
 
+    public LocalDate getFechaAdopcion() {
+        return fechaAdopcion;
+    }
+
+    public void setFechaAdopcion(LocalDate fechaAdopcion) {
+        this.fechaAdopcion = fechaAdopcion;
+    }
+
+
     //el metodo toString() te deja mirar en la terminal el valor que tiene los atributos. Si no sale la referencia en memoria
     // este se genero automaicamente es para indicarle que quieres heredar de una clase y sobre escribir metodos.
+
     @Override
     public String toString() {
         return "Animal{" +
@@ -127,8 +146,10 @@ public class Animal {
                 ", color='" + color + '\'' +
                 ", genero='" + genero + '\'' +
                 ", peso=" + peso +
+                ", fechaAdopcion=" + fechaAdopcion +
                 '}';
     }
+
 
     //Nos faltan ver las asociaciones - relaciones entre tablas
     //(esto se hace entre las claves primarias y foraneas), Enum, Agregar fechas
