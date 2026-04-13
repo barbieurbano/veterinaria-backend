@@ -42,9 +42,18 @@ public class Animal {
     //Podemos ponerle una fecha por defecto con  = LocalDate.now()
     private LocalDate fechaAdopcion = LocalDate.now();
 
+    @Enumerated(EnumType.STRING)
+    //@Column(name = "cat_type") este no e snecesario
+    private catType catType;
 
+    public catType getCatType() {
+        return catType;
+    }
 
-    //Asociacion entre dos tablas. Asociacion muchos a uno, mas comun y utilizada
+    public void setCatType(catType catType) {
+        this.catType = catType;
+    }
+//Asociacion entre dos tablas. Asociacion muchos a uno, mas comun y utilizada
     //@ManyToOne
     //private Owner owner;
 
