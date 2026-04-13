@@ -156,10 +156,9 @@ public class Animal {
                 ", genero='" + genero + '\'' +
                 ", peso=" + peso +
                 ", fechaAdopcion=" + fechaAdopcion +
+                ", catType=" + catType +
                 '}';
     }
-
-
-    //Nos faltan ver las asociaciones - relaciones entre tablas
+//Nos faltan ver las asociaciones - relaciones entre tablas
     //(esto se hace entre las claves primarias y foraneas), Enum, Agregar fechas
 }
