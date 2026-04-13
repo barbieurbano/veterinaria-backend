@@ -7,7 +7,9 @@ import com.demovete.veterinariabackend.repository.OwnerRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //Una clase con @Entity equivale a una table de base de datos
 //Un objeto equivale a una fila en una tabla de base de datos
@@ -92,6 +94,82 @@ public class VeterinariaBackendApplication {
         for(Owner owner : owners){
             System.out.println(owner);
         }
+
+        //Ponemos el nombre del repositorio y ejecutamos el metodo, tenemos que pasarle animales
+        // entonces tenemos que crearlo, hay que crear una Lista
+
+        //Animal cloe1 = new Animal("CLOOE", 7, 4.5);
+        //Animal blackito1 = new Animal("BLACKIIITO", 10, 3.2);
+        // Esta es la opcion clasica
+        //List<Animal> animals1 = new ArrayList<>();
+        //animals1.add(cloe1);
+        //animals1.add(blackito1);
+
+        //animalRepository.saveAll(animals1);
+
+
+        // Crear una lista vacia, a la lista hay que indicarle
+        //de que tipo es, en este caos la lista es de TIPO Animal (es una CLASE), esto viene de Generic
+        Animal cloe2 = new Animal("Cloeee", 8, 4.5);
+        Animal blackito2 = new Animal("Blackitoooo", 11, 3.2);
+
+        //opcion mas moderna, es una lista inmutable, si necesitamos ponerle algo nuevo
+        //primero deberiamos crear otra lista y luego ponerle el contenido de la anterior y el nuevo contenido
+        //Esto es por tema de no tener problema de ...
+        List<Animal> animals2 = List.of(cloe2, blackito2);
+        animalRepository.saveAll(animals2);
+
+        //Probamos ahora el count(), cuenta las filas de una tabla
+        Long cantidadAnimales = animalRepository.count();
+
+        if(cantidadAnimales > 0){
+            System.out.println("Hay animales en la base de datos " + cantidadAnimales);
+        }
+        else{
+            System.out.println("No hay animales en la base de datos");
+        }
+
+        //eixstById devuelve boolean, 1L significa long, o 2L
+        //animalRepository.existsById(1L);
+        //System.out.println("Existe el animal con id 1? " + animalRepository.existsById(1L));
+
+        long id = 1L;
+        boolean existe = animalRepository.existsById(id);
+
+        if(existe){
+            System.out.println("El animal con id " + id + " existe");
+        }
+        else{
+            System.out.println("El animal con id " + id + " no existe");
+        }
+
+        //deleteAll(), es de tipo void entonces no devuelve nada. Solo borra los datos de esta tabla, entidad
+        //Si le hacemos un count() nos deberia dar cero.
+        //animalRepository.deleteAll();
+        //mejor delete from in bach
+
+
+        //deleteById(), es similar al existbyid, te pide un identificador
+        //animalRepository.deleteById(1L);
+        //System.out.println("Animal borrado con id " + cloe2.getId());
+        //animalRepository.deleteById(cloe2.getId());
+
+        //delete
+        //animalRepository.delete(cloe2);
+
+        //Si se quiere borrar por nombre, requiere metodo personalizado en el repositorio
+        //animalRepository.deleteByName(cloe2);
+
+        //findById() Lo busca por id pero te trae to do el objeto.
+        //Optional es una clase de java para que no rte devuelva null,
+        //El problema de tratar con null es que puede saltar un nullExteption.
+
+        Long idABuscar = 2L;
+        //Animal animalFromDataBase = animalRepository.findById(idABuscar);
+        Optional<Animal> animalFromDataBase = animalRepository.findById(idABuscar);
+
+        Animal animal2 = animalFromDataBase.get();
+        System.out.println(animal2);
 
     }
 

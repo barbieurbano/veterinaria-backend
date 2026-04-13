@@ -12,6 +12,7 @@ UPDATE animal SET GENERO='HEMBRA' WHERE id=1
 UPDATE animal SET GENERO='MACHO' WHERE id=2
  */
 
+//EN TESTING se anadio las anotaciones de getter y setter pero tenemos que tener la dependencia
 
 @Entity
 //Por si le queremos cambiar el nombre de la tabla.
@@ -34,17 +35,21 @@ public class Animal {
     private String genero;
     private Double peso;
 
+    //Asociacion entre dos tablas. Asociacion muchos a uno, mas comun y utilizada
+    //@ManyToOne
+    //private Owner owner;
+
     //Debemos tener si o si un constructor vacio para que se pueda crear un objeto de esta clase.
     public Animal() {
     }
-
+    //Esto es otro un constructor
     public Animal(String name, Integer edad, Double peso) {
         this.name = name;
         this.edad = edad;
         this.peso = peso;
     }
 
-    //Aqui tenemos los getters y setters
+    //Aqui tenemos los metodos getters y setters(get permite obtener valor para consultarlo y set permite modificar valor)
     public Long getId() {
         return id;
     }
@@ -109,8 +114,8 @@ public class Animal {
         this.peso = peso;
     }
 
-    //el metodo toString() te deja mirar en la terminal el valor que tiene los atributos.
-
+    //el metodo toString() te deja mirar en la terminal el valor que tiene los atributos. Si no sale la referencia en memoria
+    // este se genero automaicamente es para indicarle que quieres heredar de una clase y sobre escribir metodos.
     @Override
     public String toString() {
         return "Animal{" +
