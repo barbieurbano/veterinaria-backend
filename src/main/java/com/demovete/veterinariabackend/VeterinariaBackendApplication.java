@@ -214,6 +214,7 @@ public class VeterinariaBackendApplication {
         animalAsociacion1.setFechaAdopcion(LocalDate.of(2018, 11, 15));
         animalAsociacion1.setOwner(ownerAsociacion); // aqui lo estamos asociando a ese owner que acabamos de crear
         animalRepository.save(animalAsociacion1);
+        System.out.println(animalAsociacion1);
 
         Animal animalAsociacion2 = new Animal();
         animalAsociacion2.setName("Nina");
@@ -221,6 +222,29 @@ public class VeterinariaBackendApplication {
         animalAsociacion2.setOwner(ownerAsociacion); //aqui lo estamos asociando a ese owner que acabamos de crear
         //Aqui lo estamos guardando en la BD
         animalRepository.save(animalAsociacion2);
+        System.out.println(animalAsociacion2);
+
+        // Buble for para iterar sobre todos los empleados, imprimiendo el nombre del empleado y el nombre de su restaurante
+        //Seria iterar sobre los animales, imprimiendo el nombre del animal y el nombre del owner
+
+        //Como lo hizo el profe con una lista, imprimir owner de animales de forma SEGURA sin null pointer excepticion
+        //List<Animal> animales = animalRepository.findAll();
+        //for (Animal animal : animales) {
+          //  System.out.println("Nombre animal: " + animal.getName() + "Nombre del owner: " + (animal.getOwner() != null ? animal.getOwner().getFirstNombre() : "No tiene owner"));
+            //if(animal.getFechaAdopcion() != null){
+              //  System.out.println("Trabaja en: " + animal.getOwner().getFirstNombre());
+            //}
+            //else{
+              //  System.out.println("No trabaja en ningun restaurante");
+            //}
+        //}
+
+        //con findAll
+        for (Animal animal : animalRepository.findAll()) {
+            System.out.println(
+                    "Nombre animal: " + animal.getName() +
+                            "Nombre del owner: " + (animal.getOwner() != null ? animal.getOwner().getFirstNombre() : "No tiene owner"));
+        }
 
 
 
