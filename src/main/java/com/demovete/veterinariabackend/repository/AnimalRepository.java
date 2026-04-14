@@ -3,6 +3,7 @@ package com.demovete.veterinariabackend.repository;
 import com.demovete.veterinariabackend.model.Animal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.List;
 //con Extends lo que hace es heredar todos los metodos que tiene JpaRepository
 //Long es la Clave Primaria
@@ -15,4 +16,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Animal> findByEdad(Integer edad);
 
     List<Animal> findByEdadNotNull();
+    
+    List<Animal> findAllByActiveTrue();
+
+    Collection<Object> animalesActive();
+
+    List<Animal> findAllByActiveTrueAndAnimalName(String name);
 }

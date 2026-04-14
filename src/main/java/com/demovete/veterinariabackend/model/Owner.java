@@ -16,7 +16,18 @@ public class Owner {
     private String lastName;
     private Integer age;
     private String dni;
-    //@Enumerated(EnumType.STRING)
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT true") // por defecto será true
+    private Boolean active = true;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+//@Enumerated(EnumType.STRING)
     //private OwnerLevel level = OwnerLevel.JUNIOR; // Esto es para que por defecto el nuevo owner es junior
 
     //Creamos el constructor vario y el que inserte datos

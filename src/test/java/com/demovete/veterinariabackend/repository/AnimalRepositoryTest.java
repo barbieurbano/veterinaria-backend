@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import java.awt.datatransfer.MimeTypeParameterList;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -228,4 +229,40 @@ class AnimalRepositoryTest {
         //assertEquals(2, juniors.size()); // Comprueba que en la lista de Juniors hay 2 elementos.
     }
 
+    //Filtrar empleados que esten active = true y trabajen en dominiosPizz hay que ponerle un AND
+
+
+    @Test
+    void findByActiveAndOwner() {
+        //forma de crearlo en 1 linea con el builder
+        //Lo bueno del builder es que podemos ponerle los atributos en cualquier orden.
+        //ownerRepository.save(Owner.builder().firstNombre("Sebastian").active(true).build());
+
+        repository.deleteAll();
+        //paso 1. Crear dos owner
+        Owner owner1 = new Owner();
+        owner1.setFirstNombre("Ferrari");
+        ownerRepository.save(owner1);
+
+        Owner owner2 = new Owner();
+        owner2.setFirstNombre("Redbull racing");
+        ownerRepository.save(owner2);
+
+        //paso 2. Crear cuatro animals, dos por owner
+
+        Animal animal1 = animalRepository.save(Animal.builder().name("Hamilton").active(true).owner(owner1).build());
+
+        Animal animal2 = animalRepository.save(Animal.builder().name("Leclerc").active(true).owner(owner1).build());
+
+        Animal animal3 = animalRepository.save(Animal.builder().name("Hadjar").active(false).owner(owner2).build());
+
+        Animal animal4 = animalRepository.save(Animal.builder().name("Verstappen").active(true).owner(owner2).build());
+
+        //paso 3. Invocar el nuevo metodo findAllby.. ESTO ES LO IMPORTANTE, el resto son datos demo
+        List<Animal> listaAnimales = repository.findAllByActiveTrueAndAnimalName("Ferrari");
+
+        //paso 4. assert
+        //MimeTypeParameterList animalesActivosDeFerrari;
+        //assertEquals(3, animalesActivosDeFerrari.size());
+    }
 }

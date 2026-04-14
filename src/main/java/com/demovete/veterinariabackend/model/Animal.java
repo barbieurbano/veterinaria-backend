@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import javax.swing.text.StyledEditorKit;
 import java.time.LocalDate;
 //Se importan todos los paquetes import jakarta.persistence.*; y me borraria el de .Id, .GeneratedValue..
 
@@ -41,6 +42,17 @@ public class Animal {
     private String color;
     private String genero;
     private Double peso;
+    @Column(name = "active")
+    private Boolean active = true;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     //ToString.Exclude hace que no te lo incluya en el toString ya que puedes tener problema de ciclos, por la cantidad de objetos que te trae.
     @ManyToOne // Se crearon los getter y setter tambien.
     @JoinColumn // tambien te deja cambiar  la columna de las clave foranea pero NO ES NECESARIA
@@ -176,7 +188,7 @@ public class Animal {
                 ", color='" + color + '\'' +
                 ", genero='" + genero + '\'' +
                 ", peso=" + peso +
-                ", owner=" + (owner != null ? owner.getId() : null) +
+                ", active=" + active +
                 ", fechaAdopcion=" + fechaAdopcion +
                 ", catType=" + catType +
                 '}';
