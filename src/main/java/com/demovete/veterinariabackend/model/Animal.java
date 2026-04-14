@@ -41,6 +41,11 @@ public class Animal {
     private String color;
     private String genero;
     private Double peso;
+
+    @ManyToOne // Se crearon los getter y setter tambien.
+    @JoinColumn // tambien te deja cambiar  la columna de las clave foranea
+    private Owner owner;
+
     //vamos agregar enum y fecha de adopcion, tipo de
     //LocalDate(java.time) te tiene en cuenta el calendario, puede aniadirle dias, anios viciestos
     //Podemos ponerle una fecha por defecto con  = LocalDate.now()
@@ -53,6 +58,14 @@ public class Animal {
     //@Column(name = "cat_type") este no e snecesario
     @Column(columnDefinition = "ENUM('AMERICANO', 'EUROPEO') DEFAULT 'EUROPEO'")
     private catType catType;
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
     public catType getCatType() {
         return catType;
@@ -163,10 +176,12 @@ public class Animal {
                 ", color='" + color + '\'' +
                 ", genero='" + genero + '\'' +
                 ", peso=" + peso +
+                ", owner=" + owner.getId() +
                 ", fechaAdopcion=" + fechaAdopcion +
                 ", catType=" + catType +
                 '}';
     }
+
 
 //Nos faltan ver las asociaciones - relaciones entre tablas
     //(esto se hace entre las claves primarias y foraneas), Enum, Agregar fechas

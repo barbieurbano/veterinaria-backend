@@ -166,12 +166,12 @@ public class VeterinariaBackendApplication {
         //Optional es una clase de java para que no rte devuelva null,
         //El problema de tratar con null es que puede saltar un nullExteption.
 
-        Long idABuscar = 2L;
+        //Long idABuscar = 2L;
         //Animal animalFromDataBase = animalRepository.findById(idABuscar);
-        Optional<Animal> animalFromDataBase = animalRepository.findById(idABuscar);
+        //Optional<Animal> animalFromDataBase = animalRepository.findById(idABuscar);
 
-        Animal animal2 = animalFromDataBase.get();
-        System.out.println(animal2);
+        //Animal animal2 = animalFromDataBase.get();
+        //System.out.println(animal2);
 
         //Crear un restaurante espaniol, en este caso un animal EUROPEO. Esto tambien sirve para que los usuarios puedan FILTRAR.
         Animal anEuro = new Animal();
@@ -200,6 +200,33 @@ public class VeterinariaBackendApplication {
         Animal anEuropean2 = new Animal();
         anEuropean2.setName("Rubi");
         anEuropean2.setFechaAdopcion(LocalDate.of(2014, 7, 12));
+
+        //MANY TO One - Asociar un restaurante a dos empleados -- En este caso seria asociar 1 owner a 2 animales
+        //paso 1. Crear restaurante y guardarlo en BD - Crear 1 owner y guardarlo en BD
+        //paso 2. Crear empleados, setRestaurant y guardar. (con ese restaurante) - Crear animales, asociarlo a ese owner y guardar
+
+        Owner ownerAsociacion = new Owner();
+        ownerAsociacion.setFirstNombre("Patricia");
+        ownerRepository.save(ownerAsociacion);
+
+        Animal animalAsociacion1 = new Animal();
+        animalAsociacion1.setName("Khloe");
+        animalAsociacion1.setFechaAdopcion(LocalDate.of(2018, 11, 15));
+        animalAsociacion1.setOwner(ownerAsociacion); // aqui lo estamos asociando a ese owner que acabamos de crear
+        animalRepository.save(animalAsociacion1);
+
+        Animal animalAsociacion2 = new Animal();
+        animalAsociacion2.setName("Nina");
+        animalAsociacion2.setFechaAdopcion(LocalDate.of(2025, 5, 19));
+        animalAsociacion2.setOwner(ownerAsociacion); //aqui lo estamos asociando a ese owner que acabamos de crear
+        //Aqui lo estamos guardando en la BD
+        animalRepository.save(animalAsociacion2);
+
+
+
+
+
+
 
     }
 

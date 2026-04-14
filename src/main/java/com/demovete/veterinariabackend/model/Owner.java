@@ -80,6 +80,7 @@ public class Owner {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", dni='" + dni + '\'' +
+                ", ownerLevel=" + ownerLevel +
                 '}';
     }
 
@@ -88,7 +89,7 @@ public class Owner {
 
     //public void setId(Long id) {this.id = id;}
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'JUNIOR")
+    @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'JUNIOR'")
     private OwnerLevel ownerLevel;
 
     public OwnerLevel getOwnerLevel() {
