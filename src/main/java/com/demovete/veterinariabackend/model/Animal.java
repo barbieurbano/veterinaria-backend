@@ -41,9 +41,9 @@ public class Animal {
     private String color;
     private String genero;
     private Double peso;
-
+    //ToString.Exclude hace que no te lo incluya en el toString ya que puedes tener problema de ciclos, por la cantidad de objetos que te trae.
     @ManyToOne // Se crearon los getter y setter tambien.
-    @JoinColumn // tambien te deja cambiar  la columna de las clave foranea
+    @JoinColumn // tambien te deja cambiar  la columna de las clave foranea pero NO ES NECESARIA
     private Owner owner;
 
     //vamos agregar enum y fecha de adopcion, tipo de

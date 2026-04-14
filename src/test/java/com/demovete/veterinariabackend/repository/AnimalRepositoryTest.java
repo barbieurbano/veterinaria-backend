@@ -1,8 +1,10 @@
 package com.demovete.veterinariabackend.repository;
 
 import com.demovete.veterinariabackend.model.Animal;
+import com.demovete.veterinariabackend.model.Owner; // Este se importo para usarlo  en el test void manyToOne
 import com.demovete.veterinariabackend.model.OwnerLevel;
 import com.demovete.veterinariabackend.model.catType;
+import jakarta.persistence.EntityManager;
 import lombok.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +34,14 @@ class AnimalRepositoryTest {
 
     Animal animal1;
     Animal animal2;
+
+    @Autowired
+    private OwnerRepository ownerRepository;
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    @Autowired
+    EntityManager entityManager; // Esto lo tenemos que conocer, es es gestor de entidades guardarla recuperarla limpiar la memoria
 
     @AfterAll
     static void afterAll() {
@@ -141,6 +152,7 @@ class AnimalRepositoryTest {
     @Test
     //tambien tengo que hacer estos test en el owner
     //falta el test de campoFecha
+
     void catType(){
         //Europeo
         Animal animal = new Animal();
@@ -156,10 +168,51 @@ class AnimalRepositoryTest {
         //pROBAR A QUITAR LO QUE SEA SENIOR POR DEFECTO PARA VER COMO FALLA LA COMPARACION
         assertEquals(catType.AMERICANO, americanoGuardado.getCatType());
     }
+
     @Test
     void startDate(){
         //Probar fecha por defecto que se asigna la fecha actual
-        //luego probar cambiar la fecha y ver si funciona.
+        //Crear objeto Empleado con constructor o builder
+        //Given - dado un animal
+
+        Animal animal14 = new Animal();
+        //var animal = Animal.builder().name("Maximo").build(); si lo usamos debemos ponerle todos los atributos porque si no los setea a null los que no les pasemos
+        animal14.setName("Maximo"); // Tenemos que comprobar que la fecha de asigna automaticamente si tiene el localDate.now()
+        //When
+        Animal animalGuardado = repository.save(animal14);
+        //Luego hacer un assert startDate not null
+
+        //Then
+        assertNotNull(animalGuardado.getFechaAdopcion());
+        //Comparar la fecha del animal con la fecha de ahora
+        assertEquals(LocalDate.now(), animalGuardado.getFechaAdopcion());
+
+        //luego probar cambiar la fecha y guardarla y ver si funciona. Esto podria ser otro test distinto.
+        animal14.setFechaAdopcion(LocalDate.of(2024, 2, 19));
+        Animal animalGuardado2 = repository.save(animal14);
+        assertNotNull(animalGuardado2.getFechaAdopcion());
+    }
+    @Test
+    void manyToOneAnimalTest(){
+        //paso 1. Crear un owner y guardarlo, problema que no lo podemos guardar asi debemos importar el repositorio de restaurante
+        Owner owner = new Owner();
+        owner.setFirstNombre("Sebastian");
+        //Necesitamos el correspondiente, entonces hay que importarlo y usarlo
+        ownerRepository.save(owner);
+
+        //paso 2. crear un animal y asociarle el owner
+        Animal animal = new Animal();
+        animal.setName("Maximo");
+        animal.setOwner(owner);// Le estamos pasando un objeto y ese objeto tiene que estar creado en la BD.
+        //Ahora lo guardamos en la BD
+        Animal animalGuardado = animalRepository.save(animal);
+
+        //Hacemos un assert para ver que el animal no es nullo y
+        assertNotNull(animalGuardado.getOwner());
+        //Optional<Animal> animalOptional =  repository.findById(animalGuardado.getId());
+        Animal animalFromDB = repository.findById(animalGuardado.getId()).get();
+        assertNotNull(animalFromDB.getOwner());
+
     }
 
 
