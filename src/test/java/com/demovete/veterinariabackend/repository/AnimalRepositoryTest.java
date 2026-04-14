@@ -215,5 +215,17 @@ class AnimalRepositoryTest {
 
     }
 
+    //Filtros basicos
+    //Filtrar empleados por nivel JUNIOR repository.FindLevel() crearlo en la interfaz
+    @Test
+    void findByLevel(){
+        //repository.deleteAll(); //borramos todos los 'empleados' para ver que el test funciona bien
+        //repository.save(Animal.builder().name("Connie").level(OwnerLevel.JUNIOR).build());
+        //repository.save(Animal.builder().name("Coco").level(OwnerLevel.JUNIOR).build());
+        //repository.save(Animal.builder().name("Gara").level(OwnerLevel.CRACK).build());
+
+        //List<Animal> juniors = repository.findAllByLevel(OwnerLevel.JUNIOR);
+        //assertEquals(2, juniors.size()); // Comprueba que en la lista de Juniors hay 2 elementos.
+    }
 
 }
