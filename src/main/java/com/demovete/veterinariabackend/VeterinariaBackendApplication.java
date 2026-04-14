@@ -2,11 +2,13 @@ package com.demovete.veterinariabackend;
 
 import com.demovete.veterinariabackend.model.Animal;
 import com.demovete.veterinariabackend.model.Owner;
+import com.demovete.veterinariabackend.model.catType;
 import com.demovete.veterinariabackend.repository.AnimalRepository;
 import com.demovete.veterinariabackend.repository.OwnerRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,8 +57,8 @@ public class VeterinariaBackendApplication {
 
         Owner objOwner = new Owner(null,"Barbara", "Urbano", 30, "123456H");
         Owner objOwner2 = new Owner(null,"Patricia", "Moreno", 53, "654321F");
-        ownerRepository.save(objOwner);
-        ownerRepository.save(objOwner2);
+        //ownerRepository.save(objOwner);
+        //ownerRepository.save(objOwner2);
 
         //Para mirar los datos por la terminal
         //System.out.println("Animal guardado en base de datos: " + objCloe);
@@ -88,12 +90,12 @@ public class VeterinariaBackendApplication {
         //Imprimir los animales obtenidos con un bucle for.
 
 
-        List<Owner> owners = ownerRepository.findAll();
+        //List<Owner> owners = ownerRepository.findAll();
         //System.out.println(owners);
 
-        for(Owner owner : owners){
-            System.out.println(owner);
-        }
+        //for(Owner owner : owners){
+          //  System.out.println(owner);
+        //}
 
         //Ponemos el nombre del repositorio y ejecutamos el metodo, tenemos que pasarle animales
         // entonces tenemos que crearlo, hay que crear una Lista
@@ -170,6 +172,34 @@ public class VeterinariaBackendApplication {
 
         Animal animal2 = animalFromDataBase.get();
         System.out.println(animal2);
+
+        //Crear un restaurante espaniol, en este caso un animal EUROPEO. Esto tambien sirve para que los usuarios puedan FILTRAR.
+        Animal anEuro = new Animal();
+        anEuro.setCatType(catType.EUROPEO);
+        animalRepository.save(anEuro); // Esto guardaria en la base de datos
+        System.out.println(anEuro);
+
+
+        //Crear un  restaurante de comida japonesa, en este caso crear un animal OCEANIA
+        Animal anOcean = new Animal();
+        anOcean.setCatType(catType.AMERICANO); // Si queremos agregarle mas atributos, con .set
+        animalRepository.save(anOcean);
+        System.out.println(anOcean);
+
+
+        //Probar a intentar otro tipo de comida y ver que no deja , EN ESTE CASO otro tipo de gato Argentino
+        //Animal anAsiatico = new Animal();
+        //anAsiatico.setCatType(catType.ARGENTINIAN);
+
+        //Probar fecha de starDate del restaurante, en este caso del animal
+        Animal anEuropean1 = new Animal();
+        anEuropean1.setFechaAdopcion(LocalDate.now());//para pasarle la fecha de hoy
+        animalRepository.save(anEuropean1);
+
+        //Fecha futura debemos marcar unas fechas concretas
+        Animal anEuropean2 = new Animal();
+        anEuropean2.setName("Rubi");
+        anEuropean2.setFechaAdopcion(LocalDate.of(2014, 7, 12));
 
     }
 

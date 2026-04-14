@@ -44,7 +44,8 @@ public class Animal {
     //vamos agregar enum y fecha de adopcion, tipo de
     //LocalDate(java.time) te tiene en cuenta el calendario, puede aniadirle dias, anios viciestos
     //Podemos ponerle una fecha por defecto con  = LocalDate.now()
-
+    //@CreationTimestamp Esta anotacion es para que la BD genere la fecha, util para registrar
+    //fecha automaticamente sin preocuparse de tener que cambiarla
     private LocalDate fechaAdopcion = LocalDate.now(); // con el.of() para pasarle una fecha concreta
 
 
