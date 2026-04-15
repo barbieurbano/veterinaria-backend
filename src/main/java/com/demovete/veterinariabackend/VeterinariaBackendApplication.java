@@ -262,6 +262,14 @@ public class VeterinariaBackendApplication {
         for (var a: animalRepository.findByEdadGreaterThanEqual(1))
             System.out.println(a);
 
+        //Filtro por apellido
+        System.out.println("TRAER TODOS LOS OWNER POR ORDEN DE APELLIDO");
+        for (var o: ownerRepository.findByOrderByLastNameAsc())
+            System.out.println(o);
+
+        //Filtro por edad
+
+
     }
 
 }
