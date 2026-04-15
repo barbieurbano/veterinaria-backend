@@ -1,11 +1,9 @@
 package com.demovete.veterinariabackend;
 
-import com.demovete.veterinariabackend.model.Animal;
-import com.demovete.veterinariabackend.model.Owner;
-import com.demovete.veterinariabackend.model.OwnerLevel;
-import com.demovete.veterinariabackend.model.catType;
+import com.demovete.veterinariabackend.model.*;
 import com.demovete.veterinariabackend.repository.AnimalRepository;
 import com.demovete.veterinariabackend.repository.OwnerRepository;
+import com.demovete.veterinariabackend.repository.VeterinarianRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -23,6 +21,7 @@ public class VeterinariaBackendApplication {
     public static void main(String[] args) {
         //Nos guardamos el Spring en una varuable y asi puedo pedirle algo.
         var context = SpringApplication.run(VeterinariaBackendApplication.class, args);
+
         //Esto normalemnte lo hariamos en un controlador o servicio
 
         //Estamos creando una variable(animalRepository) del tipo Animal Repository
@@ -32,14 +31,17 @@ public class VeterinariaBackendApplication {
         //Spring le llama Bean a los OBJETOS en memoria
 
         //Esto obtiene los repositorios para poder hacer operaciones de base de datos con ellos.
+        //LOS REPOSITORIOS nos dan las operaciones CRUD(findAll, save, delete) (Creat, Read, Update, Delete)
         AnimalRepository animalRepository = context.getBean(AnimalRepository.class);
         OwnerRepository ownerRepository = context.getBean(OwnerRepository.class);
+        //DishRepository dishRepository = context.getBean(DishRepository.class)
+        VeterinarianRepository veterinarianRepository = context.getBean(VeterinarianRepository.class);
 
 
         // Podemos crear un animal: new
         //Tiene que tener el constructor para poder pasarle valores.
-        Animal objCloe = new Animal("Cloe", 7, 4.5);
-        Animal objBlackito = new Animal("Blackito", 10, 3.2);
+        Animal objCloe = new Animal("Cloe ", 7, 4.5);
+        Animal objBlackito = new Animal("Blackito ", 10, 3.2);
         // Guardar el animal en base de datos usando el repositorio: .save(), va estar vacio de momento
         //Esto lo escribimos asi en java pero lo traduce a SQL en la terminal veremos un INSERT
 
@@ -113,8 +115,8 @@ public class VeterinariaBackendApplication {
 
         // Crear una lista vacia, a la lista hay que indicarle
         //de que tipo es, en este caos la lista es de TIPO Animal (es una CLASE), esto viene de Generic
-        Animal cloe2 = new Animal("Cloeee", 8, 4.5);
-        Animal blackito2 = new Animal("Blackitoooo", 11, 3.2);
+        Animal cloe2 = new Animal("Cloeee ", 8, 4.5);
+        Animal blackito2 = new Animal("Blackitoooo ", 11, 3.2);
 
         //opcion mas moderna, es una lista inmutable, si necesitamos ponerle algo nuevo
         //primero deberiamos crear otra lista y luego ponerle el contenido de la anterior y el nuevo contenido
@@ -199,7 +201,7 @@ public class VeterinariaBackendApplication {
 
         //Fecha futura debemos marcar unas fechas concretas
         Animal anEuropean2 = new Animal();
-        anEuropean2.setName("Rubi");
+        anEuropean2.setName("Rubi ");
         anEuropean2.setFechaAdopcion(LocalDate.of(2014, 7, 12));
 
         //MANY TO One - Asociar un restaurante a dos empleados -- En este caso seria asociar 1 owner a 2 animales
@@ -212,7 +214,7 @@ public class VeterinariaBackendApplication {
         ownerRepository.save(ownerAsociacion);
 
         Animal animalAsociacion1 = new Animal();
-        animalAsociacion1.setName("Khloe");
+        animalAsociacion1.setName("Khloe ");
         animalAsociacion1.setEdad(10);
         animalAsociacion1.setFechaAdopcion(LocalDate.of(2018, 11, 15));
         animalAsociacion1.setOwner(ownerAsociacion); // aqui lo estamos asociando a ese owner que acabamos de crear
@@ -220,7 +222,7 @@ public class VeterinariaBackendApplication {
         System.out.println(animalAsociacion1);
 
         Animal animalAsociacion2 = new Animal();
-        animalAsociacion2.setName("Nina");
+        animalAsociacion2.setName("Nina ");
         animalAsociacion2.setEdad(2);
         animalAsociacion2.setFechaAdopcion(LocalDate.of(2025, 5, 19));
         animalAsociacion2.setOwner(ownerAsociacion); //aqui lo estamos asociando a ese owner que acabamos de crear
@@ -254,21 +256,34 @@ public class VeterinariaBackendApplication {
         List<Animal> animalesEspecie = animalRepository.findByEdadNotNull();
         System.out.println(animalesEspecie);
 
+        System.out.println();
         System.out.println("FILTRAR ANIMALES POR TIPO DE OWNER(JUNIOR, SENIOR, CRACK)");
         for (var a : animalRepository.findByOwner_OwnerLevel(OwnerLevel.JUNIOR))
             System.out.println(a);
 
+        System.out.println();
         System.out.println("FILTRAR ANIMALES POR EDAD MAYOR O IGUAL QUE");
-        for (var a: animalRepository.findByEdadGreaterThanEqual(1))
+        for (var a: animalRepository.findByEdadGreaterThanEqual(8))
             System.out.println(a);
 
         //Filtro por apellido
+        System.out.println();
         System.out.println("TRAER TODOS LOS OWNER POR ORDEN DE APELLIDO");
         for (var o: ownerRepository.findByOrderByLastNameAsc())
             System.out.println(o);
 
-        //Filtro por edad
 
+        //CREAR veterinarios
+        Veterinarian veterinarian1 = new Veterinarian("Juan", "Perez", 55555555, "juani@gmail.com",35166673, VetSpecialists.ANIMALES_EXOTICOS);
+        Veterinarian veterinarian2 = new Veterinarian("Franca", "Britos", 44444444, "franquiz@gmail.com",351775764, VetSpecialists.CIRUGIA);
+        Veterinarian veterinarian3 = new Veterinarian("Eric", "Pereira", 333333333, "edic@gmail.com",351745552, VetSpecialists.MEDICINA_GENERAL);
+        //PARA GUARDARLOS de golpe con saveAll() HAY QUE CREAR EL REPOSITORIOOOOOOOO
+        veterinarianRepository.saveAll(List.of(veterinarian1, veterinarian2, veterinarian3));
+
+        //OPCION 1. Crear consultas personalizadas en DishRepository
+        //que traiga los platos con rpeico menor que 10 euros findAllByPrice..
+
+        //OPCION 2. hacer un pedido
 
     }
 

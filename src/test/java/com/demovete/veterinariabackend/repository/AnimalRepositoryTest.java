@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-
-import java.awt.datatransfer.MimeTypeParameterList;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -264,7 +262,7 @@ class AnimalRepositoryTest {
         Animal animal4 = animalRepository.save(Animal.builder().name("Verstappen").active(true).owner(owner2).build());
 
         //paso 3. Invocar el nuevo metodo findAllby.. ESTO ES LO IMPORTANTE, el resto son datos demo
-        List<Animal> listaAnimales = repository.findAllByActiveTrueAndAnimalName("Ferrari");
+        List<Animal> listaAnimales = repository.findAllByActiveTrueAndName("Ferrari");
 
         //paso 4. assert
         //MimeTypeParameterList animalesActivosDeFerrari;

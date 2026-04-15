@@ -13,6 +13,11 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
     @Query("select o from Owner o order by o.lastName")
     List<Owner> findByOrderByLastNameAsc();
 
+    //Consulta para traer todos los platos de un restaurante por id,
+    //ordenados por precio ascendente.
+
+    //findByRestaurantId
+
 
 }
 

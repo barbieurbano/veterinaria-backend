@@ -14,8 +14,9 @@ public class Owner {
     private Long id;
     private String firstNombre;
     private String lastName;
-    private Integer age;
     private String dni;
+    private Integer age;
+
 
     @Column(columnDefinition = "BOOLEAN DEFAULT true") // por defecto será true
     private Boolean active = true;

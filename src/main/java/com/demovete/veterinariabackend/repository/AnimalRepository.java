@@ -20,9 +20,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     
     List<Animal> findAllByActiveTrue();
 
-    Collection<Object> animalesActive();
-
-    List<Animal> findAllByActiveTrueAndAnimalName(String name);
+    List<Animal> findAllByActiveTrueAndName(String name);
 
     List<Animal> findByOwner_OwnerLevel(OwnerLevel ownerLevel);
 

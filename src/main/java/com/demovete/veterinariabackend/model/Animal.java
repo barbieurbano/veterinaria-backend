@@ -3,8 +3,6 @@ package com.demovete.veterinariabackend.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-
-import javax.swing.text.StyledEditorKit;
 import java.time.LocalDate;
 //Se importan todos los paquetes import jakarta.persistence.*; y me borraria el de .Id, .GeneratedValue..
 
@@ -25,6 +23,7 @@ UPDATE animal SET GENERO='MACHO' WHERE id=2
 @Builder
 @AllArgsConstructor
 public class Animal {
+    //1. Atributos
     //Tiene mayor capacidad de almacenamiento el LONG.
     @Id
     //Para generar automaticamante el ID, se puede configurar la estrategia esta es la opcion mas comun
@@ -42,8 +41,13 @@ public class Animal {
     private String color;
     private String genero;
     private Double peso;
+
     @Column(name = "active")
     private Boolean active = true;
+
+    @Enumerated(EnumType.STRING)
+    //@Column(columnDefinition = "ENUM('AMERICANO', 'EUROPEO') DEFAULT 'EUROPEO'")
+    private catType catType;
 
     public Boolean getActive() {
         return active;
@@ -58,6 +62,18 @@ public class Animal {
     @JoinColumn // tambien te deja cambiar  la columna de las clave foranea pero NO ES NECESARIA
     private Owner owner;
 
+    //Many hace referencia a la clase y el one a la asociacion
+    @ManyToOne
+    private Veterinarian veterinarian;
+
+    public Veterinarian getVeterinarian() {
+        return veterinarian;
+    }
+
+    public void setVeterinarian(Veterinarian veterinarian) {
+        this.veterinarian = veterinarian;
+    }
+
     //vamos agregar enum y fecha de adopcion, tipo de
     //LocalDate(java.time) te tiene en cuenta el calendario, puede aniadirle dias, anios viciestos
     //Podemos ponerle una fecha por defecto con  = LocalDate.now()
@@ -66,10 +82,16 @@ public class Animal {
     private LocalDate fechaAdopcion = LocalDate.now(); // con el.of() para pasarle una fecha concreta
 
 
-    @Enumerated(EnumType.STRING)
-    //@Column(name = "cat_type") este no e snecesario
-    @Column(columnDefinition = "ENUM('AMERICANO', 'EUROPEO') DEFAULT 'EUROPEO'")
-    private catType catType;
+    //2. Constructores
+    //Debemos tener si o si un constructor vacio para que se pueda crear un objeto de esta clase.
+    public Animal() {}
+
+    //Esto es otro un constructor
+    public Animal(String name, Integer edad, Double peso) {
+        this.name = name;
+        this.edad = edad;
+        this.peso = peso;
+    }
 
     public Owner getOwner() {
         return owner;
@@ -90,15 +112,6 @@ public class Animal {
     //@ManyToOne
     //private Owner owner;
 
-    //Debemos tener si o si un constructor vacio para que se pueda crear un objeto de esta clase.
-    public Animal() {
-    }
-    //Esto es otro un constructor
-    public Animal(String name, Integer edad, Double peso) {
-        this.name = name;
-        this.edad = edad;
-        this.peso = peso;
-    }
 
     //Aqui tenemos los metodos getters y setters(get permite obtener valor para consultarlo y set permite modificar valor)
     public Long getId() {
