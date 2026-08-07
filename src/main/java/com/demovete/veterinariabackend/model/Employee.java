@@ -2,12 +2,18 @@ package com.demovete.veterinariabackend.model;
 
 import com.demovete.veterinariabackend.model.enums.ContractType;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-
+@Table(name = "employees")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Employee {
     @Id
     @GeneratedValue
