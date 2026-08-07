@@ -1,6 +1,4 @@
 package com.demovete.veterinariabackend.model;
-
-import com.demovete.veterinariabackend.model.enums.VetSpecialists;
 import jakarta.persistence.*;
 import lombok.*;
 
