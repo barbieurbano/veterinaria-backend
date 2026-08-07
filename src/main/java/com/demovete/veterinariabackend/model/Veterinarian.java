@@ -27,5 +27,11 @@ public class Veterinarian {
     @JoinColumn(name = "employee_id", nullable = false, unique = true)
     private Employee employee;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "veterinarian_specialties",
+            joinColumns = @JoinColumn(name = "veterinarian_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialty_id")
+    )
     private Set<Specialty> specialties = new HashSet<>();
 }
