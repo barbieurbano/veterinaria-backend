@@ -1,104 +1,33 @@
 package com.demovete.veterinariabackend.model;
 
+import com.demovete.veterinariabackend.model.enums.VetSpecialists;
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "Veterinarian")
+@Table(name = "veterinarians")
 public class Veterinarian {
     //1. Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    @Column(name = "license_number", nullable = false, unique = true, length = 50)
     private Integer licenseNumber;
-    private String email;
-    private Integer phone;
 
-    @Enumerated(EnumType.STRING)
-    private VetSpecialists specialty;
+    private Boolean isExternal = false;
 
-    //2. Constructores
-    public Veterinarian() {}
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "employee_id", nullable = false, unique = true)
+    private Employee employee;
 
-    public Veterinarian(String firstName, String lastName, Integer licenseNumber, String email, Integer phone, VetSpecialists specialty) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.licenseNumber = licenseNumber;
-        this.email = email;
-        this.phone = phone;
-        this.specialty = specialty;
-    }
-
-    //3. Getter y Setter
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(Integer licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
-
-    public VetSpecialists getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(VetSpecialists specialty) {
-        this.specialty = specialty;
-    }
-
-    //4. toString
-    @Override
-    public String toString() {
-        return "Veterinarian{" +
-                "id=" + id +
-                ", licenseNumber=" + licenseNumber +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", specialty=" + specialty +
-                '}';
-    }
-
+    private Set<Specialty> specialties = new HashSet<>();
 }
