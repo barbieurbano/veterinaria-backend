@@ -1,0 +1,31 @@
+# PostgreSQL 18 para el perfil "prod" de veterinaria-backend.
+#
+# Uso:
+#   docker compose up -d          # levanta la base de datos
+#   docker compose down           # la para (conserva los datos en el volumen)
+#   docker compose down -v        # la para y BORRA los datos
+#
+# Luego arranca la app contra esta BD:
+#   ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+services:
+  postgres:
+    image: postgres:18
+    container_name: veterinaria-postgres
+    environment:
+      POSTGRES_DB: veterinaria
+      POSTGRES_USER: veterinaria
+      POSTGRES_PASSWORD: veterinaria
+    ports:
+      - "5432:5432"
+    volumes:
+      # PostgreSQL 18 guarda los datos en /var/lib/postgresql/18/docker,
+      # por eso el volumen se monta en /var/lib/postgresql.
+      - veterinaria-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U veterinaria -d veterinaria"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  veterinaria-pgdata:
