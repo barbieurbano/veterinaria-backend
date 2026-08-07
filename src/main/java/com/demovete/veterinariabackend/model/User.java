@@ -4,13 +4,15 @@ import com.demovete.veterinariabackend.model.enums.AuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
+@Table(name = "users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Entity
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
