@@ -31,7 +31,7 @@ public class Customer {
     private String email;
 
     @Column(nullable = false, length = 30)
-    private Integer phone;
+    private String phone;
 
     @Column(name = "document_number", length = 20)
     private String documentNumber;
