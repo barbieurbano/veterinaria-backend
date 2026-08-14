@@ -97,6 +97,7 @@ public class PetServiceImpl implements PetService{
     }
 
     @Override
+    @Transactional
     public void deletePet(Long id){
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
