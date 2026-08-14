@@ -36,4 +36,10 @@ public class PetRestController {
     public PetResponseDTO updatePet(@PathVariable Long id, @Valid @RequestBody PetUpdateRequestDTO dto){
         return petService.updatePet(id, dto);
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePet(@PathVariable Long id){
+        petService.deletePet(id);
+    }
 }
