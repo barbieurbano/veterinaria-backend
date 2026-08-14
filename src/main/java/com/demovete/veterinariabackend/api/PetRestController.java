@@ -2,6 +2,7 @@ package com.demovete.veterinariabackend.api;
 
 import com.demovete.veterinariabackend.dto.PetCreateRequestDTO;
 import com.demovete.veterinariabackend.dto.PetResponseDTO;
+import com.demovete.veterinariabackend.dto.PetUpdateRequestDTO;
 import com.demovete.veterinariabackend.service.PetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class PetRestController {
     @GetMapping("{id}")
     public PetResponseDTO getPetById(@PathVariable Long id){
         return petService.getPetById(id);
+    }
+
+    @PutMapping("{id}")
+    public PetResponseDTO updatePet(@PathVariable Long id, @Valid @RequestBody PetUpdateRequestDTO dto){
+        return petService.updatePet(id, dto);
     }
 }
