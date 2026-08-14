@@ -1,6 +1,7 @@
 package com.demovete.veterinariabackend.dto;
 
 import com.demovete.veterinariabackend.model.enums.Gender;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -24,9 +25,9 @@ public record PetCreateRequestDTO (
         String photoUrl,
         String notes,
 
-        @NotBlank(message = "Debes seleccionar una raza para la mascota")
+        @NotNull(message = "Debes seleccionar una raza para la mascota")
         Long breedId,
-        @NotBlank(message = "Debes asociar la mascota a un cliente/dueño")
+        @NotNull(message = "Debes asociar la mascota a un cliente/dueño")
         Long customerId
 ) {
 
