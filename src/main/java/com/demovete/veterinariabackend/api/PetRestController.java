@@ -25,4 +25,9 @@ public class PetRestController {
         PetResponseDTO createdPet = petService.createPet(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);
     }
+
+    @GetMapping("{id}")
+    public PetResponseDTO getPetById(@PathVariable Long id){
+        return petService.getPetById(id);
+    }
 }
