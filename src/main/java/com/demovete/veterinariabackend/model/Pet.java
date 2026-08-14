@@ -28,7 +28,7 @@ public class Pet {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "microchip_number", unique = true, length = 50)
+    @Column(name = "microchip_number", unique = true, length = 15)
     private String microchipNumber;
 
     private Boolean neutered;
@@ -36,7 +36,7 @@ public class Pet {
     @Column(name = "neutering_date")
     private LocalDate neuteringDate;
 
-    @Column(length = 50)
+    @Column(length = 30)
     private String color;
 
     @Column(name = "distinctive_marks", length = 255)
