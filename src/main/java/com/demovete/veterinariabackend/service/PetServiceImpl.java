@@ -53,6 +53,7 @@ public class PetServiceImpl implements PetService{
                 .color(dto.color())
                 .distinctiveMarks(dto.distinctiveMarks())
                 .photoUrl(dto.photoUrl())
+                .notes(dto.notes())
                 .breed(breed)
                 .customer(customer)
                 .build();
