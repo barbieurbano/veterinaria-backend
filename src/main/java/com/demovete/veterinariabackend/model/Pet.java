@@ -44,7 +44,7 @@ public class Pet {
 
     private String photoUrl;
 
-
+    @Builder.Default
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean active = true;
 
