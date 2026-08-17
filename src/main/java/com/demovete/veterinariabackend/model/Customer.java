@@ -33,6 +33,8 @@ public class Customer {
     @Column(nullable = false, length = 30)
     private String phone;
 
+    private Boolean active = true;
+
     @Column(name = "document_number", length = 20)
     private String documentNumber;
 
