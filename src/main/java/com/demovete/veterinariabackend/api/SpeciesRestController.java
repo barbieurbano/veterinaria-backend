@@ -34,9 +34,8 @@ public class SpeciesRestController {
     }
 
     @GetMapping("{id}")
-    public SpeciesResponseDTO getSpeciesById(@PathVariable Long id,
-                                             @Valid @RequestBody SpeciesUpdateRequestDTO dto){
-        return speciesService.updateSpecies(id, dto);
+    public SpeciesResponseDTO getSpeciesById(@PathVariable Long id){
+        return speciesService.getSpeciesById(id);
     }
 
     @PutMapping("{id}")
