@@ -37,7 +37,6 @@ public class CustomerServiceImpl implements CustomerService {
                 .phone(dto.phone())
                 .documentNumber(dto.documentNumber())
                 .photoUrl(dto.photoUrl())
-                .active(true)
                 .build();
 
         return mapToDto(customerRepository.save(customer));
