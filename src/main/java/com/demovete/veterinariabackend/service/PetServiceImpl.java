@@ -77,7 +77,7 @@ public class PetServiceImpl implements PetService{
     public List<PetResponseDTO> getPetsByCustomerId(Long customerId){
         if(!customerRepository.existsById(customerId)){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "El cliente con ID " + customerId + "no existe.");
+                    HttpStatus.NOT_FOUND, "El cliente con ID " + customerId + " no existe.");
 
         }
         return petRepository.findByCustomerIdAndActiveTrue(customerId)
@@ -99,7 +99,7 @@ public class PetServiceImpl implements PetService{
         if (dto.neutered() != null)        pet.setNeutered(dto.neutered());
         if (dto.neuteringDate() != null)   pet.setNeuteringDate(dto.neuteringDate());
         if (dto.color() != null)           pet.setColor(dto.color());
-        if (dto.distinctiveMark() != null) pet.setDistinctiveMarks(dto.distinctiveMark());
+        if (dto.distinctiveMarks() != null) pet.setDistinctiveMarks(dto.distinctiveMarks());
         if (dto.photoUrl() != null)        pet.setPhotoUrl(dto.photoUrl());
         if (dto.active() != null)          pet.setActive(dto.active());
         if (dto.notes() != null)           pet.setNotes(dto.notes());

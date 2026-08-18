@@ -26,7 +26,7 @@ public record PetUpdateRequestDTO (
         String color,
 
         @Size(max = 255, message = "Las marcas características de la mascota no puede superar los 255 caracteres")
-        String distinctiveMark,
+        String distinctiveMarks,
 
         String photoUrl,
         Boolean active,
