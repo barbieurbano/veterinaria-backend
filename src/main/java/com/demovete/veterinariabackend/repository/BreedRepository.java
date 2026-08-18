@@ -10,4 +10,5 @@ public interface BreedRepository extends JpaRepository<Breed, Long> {
     List<Breed> findBySpeciesIdOrderByNameAsc(Long speciesId);
     //Para no duplicar razas
     boolean existsByNameIgnoreCaseAndSpeciesId(String name, Long speciesId);
+    boolean existsBySpeciesId(Long speciesId);
 }
