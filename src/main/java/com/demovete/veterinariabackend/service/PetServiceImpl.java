@@ -93,6 +93,40 @@ public class PetServiceImpl implements PetService{
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Mascota no encontrada con ID: " + id));
 
+        if (dto.name() != null)            pet.setName(dto.name());
+        if (dto.birthDate() != null)       pet.setBirthDate(dto.birthDate());
+        if (dto.gender() != null)          pet.setGender(dto.gender());
+        if (dto.neutered() != null)        pet.setNeutered(dto.neutered());
+        if (dto.neuteringDate() != null)   pet.setNeuteringDate(dto.neuteringDate());
+        if (dto.color() != null)           pet.setColor(dto.color());
+        if (dto.distinctiveMark() != null) pet.setDistinctiveMarks(dto.distinctiveMark());
+        if (dto.photoUrl() != null)        pet.setPhotoUrl(dto.photoUrl());
+        if (dto.active() != null)          pet.setActive(dto.active());
+        if (dto.notes() != null)           pet.setNotes(dto.notes());
+
+
+        if (dto.microchipNumber() != null && !dto.microchipNumber().isBlank()) {
+            petRepository.findByMicrochipNumber(dto.microchipNumber())
+                    .filter(other -> !other.getId().equals(id))
+                    .ifPresent(other -> { throw new ResponseStatusException(
+                            HttpStatus.BAD_REQUEST, "Ese microchip ya pertenece a otra mascota"); });
+            pet.setMicrochipNumber(dto.microchipNumber());
+        }
+
+        // Traemos la entidad
+        if (dto.breedId() != null) {
+            Breed breed = breedRepository.findById(dto.breedId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "No se encontró la raza con ID: " + dto.breedId()));
+            pet.setBreed(breed);
+        }
+        if (dto.customerId() != null) {
+            Customer customer = customerRepository.findById(dto.customerId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "No se encontró el cliente con ID: " + dto.customerId()));
+            pet.setCustomer(customer);
+        }
+
         Pet updated = petRepository.save(pet);
         return mapToDto(updated);
     }
