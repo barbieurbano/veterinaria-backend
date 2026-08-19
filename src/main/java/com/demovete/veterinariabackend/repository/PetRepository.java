@@ -18,4 +18,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
     //Verifica si existe un microchip asignado a otra mascota.
     boolean existsByMicrochipNumber(String microchipNumber);
+
+    //Para no borrar una raza que tenga mascotas asociadas
+    boolean existsByBreedId(Long breedId);
 }
